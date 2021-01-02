@@ -1,23 +1,19 @@
 # county_in_states
-A reverse engineered python dictionary where the key is the county and the values are the states where the county appears. 
-I was interested in seeing what counties appeared in other states and at what frequency. 
+The product of my first data project. I wanted to find what counties appeared in more than one state. 
+Unsurprisingly, counties named after the founders, or in a few cases: counties named after English aristocrats, appeared in the most states. 
+I wrote two functions to acheive this. 
 
-For example:
-    
     print(in_state("Bergen"))
     Bergen is only in ['New Jersey']
 
     print(in_state("York"))
     ['Maine', 'South Carolina', 'Virginia', 'Nebraska', 'Pennsylvania']
 
-
     print(in_state("Washington"))
     ['Kentucky', 'Louisiana', 'Maine', 'Iowa', 'Kansas', 'Mississippi', 'Missouri', 'Maryland', 'Minnesota', 'Florida', 'Colorado', 'Alabama', 'Arkansas', 'Illinois', 'Indiana', 'Idaho', 'Georgia', 'Tennessee', 'Virginia', 'Wisconsin', 'Utah', 'Vermont', 'Texas', 'New York', 'North Carolina', 'Nebraska', 'Pennsylvania', 'Oregon', 'Rhode Island', 'Oklahoma', 'Ohio']
 
-
-
-The original dictionary was built from a covid-19 dataframe, after it had appeared in every county in the US. 
-I wrote a function to return the counties in an inputted state. I validated the input against a fixed list of states to avoid errors. 
+I validated the input against a fixed list of states to avoid errors by using pandas' .unique() method. 
+The variable 'states' referenced in the if statement below was df.state.unique().
 
     def counties_in(state):
         counties = df[df['state'] == state].county.unique()
@@ -25,8 +21,10 @@ I wrote a function to return the counties in an inputted state. I validated the 
             return "{0} is not a state.".format(state)
         return counties
         
-Then I wrote essentially an inverse of the previous function, and finally looped through a list of all the counties in the covid-19 dataframe,
-from which I built the counties_in_states.py dict. 
+Then I wrote essentially an inverse of the previous function.
+I created a dateframe for a given county. 
+Then I added the .unique() method to the county_df.state column,
+to return a list of states where the counties appeared. 
 
     def in_state(county):
         county_df = df[df['county'] == county]
